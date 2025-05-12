@@ -5,7 +5,8 @@ import { UpdateCarDto } from './dto/update-car.dto';
 @Controller('cars')
 // @UsePipes(ValidationPipe)
 export class CarsController {
-    constructor(private readonly carsService: CarsService) { }
+    constructor(private readonly carsService: CarsService) //Esto es una inyeccion de dependencias
+    { }
 
     @Get()
     getAllCars() {
@@ -26,14 +27,16 @@ export class CarsController {
     }
 
     @Patch(':id')
-    updateCarById(@Param('id', ParseUUIDPipe) id: string, @Body() UpdateCarDto: UpdateCarDto) {
-        return { id, UpdateCarDto }
+    updateCarById(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() UpdateCarDto: UpdateCarDto) {
+        return this.carsService.update(id, UpdateCarDto);
     }
-    
+
 
     @Delete(':id')
-    deleteCarById(@Param('id', ParseIntPipe) id: number) {
-        return { id, method: 'DELETE' }
+    deleteCarById(@Param('id', ParseUUIDPipe) id: string) {
+        return this.carsService.delete(id);
     }
 }
 

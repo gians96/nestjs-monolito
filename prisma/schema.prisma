@@ -17,5 +17,6 @@ datasource db {
 model Car {
   id String @id @default(uuid())
   name String
+  model String
   price Int
 }
